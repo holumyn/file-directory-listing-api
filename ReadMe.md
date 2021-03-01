@@ -29,9 +29,9 @@ Run container
 Get your root directory
 
 ```
-    POST http://127.0.0.1:3002/get-directories
+    URL: POST http://127.0.0.1:3002/get-directories
 
-   {
+   Body: {
   	  "rootPath": "/"
    }
 ```
