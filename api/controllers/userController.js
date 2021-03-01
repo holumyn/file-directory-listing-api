@@ -19,31 +19,34 @@ exports.welcome = async function welcome(req, res) {
 
 exports.getDirectories = async function getDirectories(req, res) {
   try {
-    // const rootPath = "/Users/olumide/Documents/projects";
-    const { path } = req.body;
+    const { rootPath } = req.body;
 
-    const fileNames = await fs.promises.readdir(path);
+    const fileNames = await fs.promises.readdir(rootPath);
     const filePaths = fileNames.map((fileName) =>
       path.join(rootPath, fileName)
     );
+
     const filePathsAndIsDirectoryFlagsPromises = filePaths.map(
       async (filePath) => ({
         path: filePath,
         isDirectory: (await fs.promises.stat(filePath)).isDirectory(),
       })
     );
+
     const filePathsAndIsDirectoryFlags = await Promise.all(
       filePathsAndIsDirectoryFlagsPromises
     );
+
     const getDirectories = filePathsAndIsDirectoryFlags
       .filter(
         (filePathAndIsDirectoryFlag) => filePathAndIsDirectoryFlag.isDirectory
       )
       .map((filePathAndIsDirectoryFlag) => filePathAndIsDirectoryFlag.path);
+
     return res.status(constants.HTTP_STATUS.OK.CODE).send(getDirectories);
   } catch (error) {
     return res.status(constants.HTTP_STATUS.INTERNAL_SERVER_ERROR.CODE).json({
-      message: "An error occured during welcome",
+      message: "An error occured while getting directories",
       error: error.message,
     });
   }

@@ -16,8 +16,6 @@ To generate coverage report
 
 ---
 
----
-
 # Docker
 
 Build docker image
@@ -25,3 +23,14 @@ Build docker image
 
 Run container
 `docker-compose up`
+
+# Example
+
+Get your root directory
+
+```POST http://127.0.0.1:3002/get-directories
+
+   {
+  	  "rootPath": "/"
+   }
+```
