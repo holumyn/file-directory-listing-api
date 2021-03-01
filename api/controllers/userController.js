@@ -27,10 +27,16 @@ exports.getDirectories = async function getDirectories(req, res) {
     );
 
     const filePathsAndIsDirectoryFlagsPromises = filePaths.map(
-      async (filePath) => ({
-        path: filePath,
-        isDirectory: (await fs.promises.stat(filePath)).isDirectory(),
-      })
+      async (filePath) => {
+        let stats = await fs.promises.stat(filePath);
+        // Return any attribute you want at this point
+        return {
+          path: filePath,
+          isDirectory: stats.isDirectory(),
+          size: stats.size,
+          mode: stats.mode,
+        };
+      }
     );
 
     const filePathsAndIsDirectoryFlags = await Promise.all(
@@ -41,7 +47,7 @@ exports.getDirectories = async function getDirectories(req, res) {
       .filter(
         (filePathAndIsDirectoryFlag) => filePathAndIsDirectoryFlag.isDirectory
       )
-      .map((filePathAndIsDirectoryFlag) => filePathAndIsDirectoryFlag.path);
+      .map((filePathAndIsDirectoryFlag) => filePathAndIsDirectoryFlag);
 
     return res.status(constants.HTTP_STATUS.OK.CODE).send(getDirectories);
   } catch (error) {
