@@ -32,11 +32,12 @@ Get your root directory
     URL: POST http://127.0.0.1:3002/get-directories
 
     Sample payload for different env
-   Docker: {
-  	  "rootPath": "/"
-   }
 
-   Mac: {
-  	  "rootPath": "/Users"
-   }
+    Docker: {
+        "rootPath": "/"
+    }
+
+    Mac: {
+        "rootPath": "/Users"
+    }
 ```
