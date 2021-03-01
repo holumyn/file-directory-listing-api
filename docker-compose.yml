@@ -1,0 +1,19 @@
+version: "3"
+services:
+  api:
+    image: directory-listing
+    build: .
+    networks:
+      - backend
+    ports:
+      - "3002:3002"
+
+  web-cli:
+    image: directory-listing
+    networks:
+      - backend
+    command: sh
+
+networks:
+  backend:
+    driver: bridge
